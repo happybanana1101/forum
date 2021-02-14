@@ -1,0 +1,4 @@
+com/jsq/forum/configuration/WebConfig.class
+com/jsq/forum/ForumApplication.class
+com/jsq/forum/configuration/WebSecurityConfig.class
+com/jsq/forum/model/User.class
