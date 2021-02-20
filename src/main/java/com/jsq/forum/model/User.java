@@ -10,5 +10,5 @@ public class User{
 	private String username; //用户名
 	private String password;//用户密码
 	private String introduction;//用户的介绍
-	private Date createdDate;//用户的注册时间
+	private Date created_date;//用户的注册时间
 }
