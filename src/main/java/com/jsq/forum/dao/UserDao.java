@@ -8,4 +8,5 @@ import org.apache.ibatis.annotations.Param;
 public interface UserDao {
     int addUser(User user);
     User getUserByUsername(@Param("username") String username);
+    String getUsernameById(@Param("userId") String userId);
 }

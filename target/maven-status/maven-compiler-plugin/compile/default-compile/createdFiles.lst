@@ -1,4 +1,17 @@
+com/jsq/forum/service/UserDetailsServiceimp.class
 com/jsq/forum/configuration/WebConfig.class
+com/jsq/forum/controller/RegisterController.class
+com/jsq/forum/service/PageService.class
 com/jsq/forum/ForumApplication.class
+com/jsq/forum/dao/UserDao.class
+com/jsq/forum/model/Answer.class
+com/jsq/forum/dao/TopicDao.class
 com/jsq/forum/configuration/WebSecurityConfig.class
+com/jsq/forum/controller/TopicController.class
+com/jsq/forum/model/PageBean.class
+com/jsq/forum/model/Topic.class
+com/jsq/forum/service/RegisterService.class
+com/jsq/forum/controller/TopicsController.class
+com/jsq/forum/util/HostHolder.class
+com/jsq/forum/dao/AnswerDao.class
 com/jsq/forum/model/User.class

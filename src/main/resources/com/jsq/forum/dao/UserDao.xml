@@ -11,4 +11,9 @@
         from user b
         where b.username= #{username}
     </select>
+    <select id="getUsernameById" resultType="String">
+        select username
+        from user
+        where id = #{userId}
+    </select>
 </mapper>
