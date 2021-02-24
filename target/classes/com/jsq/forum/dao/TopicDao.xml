@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.jsq.forum.dao.TopicDao">
+    <select id="findAll" resultType="com.jsq.forum.model.Topic">
+        select id,title,content,category,created_date,code,id_user
+        from topic
+        order by created_date DESC
+    </select>
+
+    <select id="findTopicsByCategoryOrderByCreatedDateDesc" resultType="com.jsq.forum.model.Topic">
+        select id,title,content,category,created_date,code,id_user
+        from topic
+        where category = #{category}
+        order by created_date DESC
+    </select>
+    <select id="findTopicById" resultType="com.jsq.forum.model.Topic">
+        select id,title,content,category,created_date,code,id_user
+        from topic
+        where id = #{id}
+    </select>
+</mapper>
