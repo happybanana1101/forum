@@ -35,6 +35,21 @@ public class TopicController {
     TopicService topicService;
 
 
+    @RequestMapping(path = "/topic/{id}", method = RequestMethod.POST)
+    public View updateAnswer(@RequestParam String id_topic, @RequestParam String action, @RequestParam String id_answer,
+                             @RequestParam(required = false) String state, HttpServletRequest request) {
+        switch (action){
+            case "useful":
+                answerDao.setUsefulForAnswer(!Boolean.valueOf(state),Long.parseLong(id_answer));
+                break;
+            case "delete":
+                answerDao.deleteAnswerById(Long.parseLong(id_answer));
+                break;
+        }
+
+        String context = request.getContextPath();
+        return new RedirectView(context+"/topic/"+id_topic);
+    }
     @RequestMapping(path = "/topic/{id}", method = RequestMethod.GET)
     public String displayTopic(@PathVariable String id, Model model) {
         User user = hostHolder.getUser();

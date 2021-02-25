@@ -22,6 +22,11 @@ public class FollowService {
         jedis.sadd("fans-"+String.valueOf(userId_follow),String.valueOf(userId_fans));
         jedis.sadd("follow-"+String.valueOf(userId_fans),String.valueOf(userId_follow));
     }
+    public void deleteFollow(Long userId_fans,Long userId_follow){
+        Jedis jedis = jedisUtil.getJedis();
+        jedis.srem("fans-"+String.valueOf(userId_follow),String.valueOf(userId_fans));
+        jedis.srem("follow-"+String.valueOf(userId_fans),String.valueOf(userId_follow));
+    }
     public boolean isFollow(Long otherUserId,Long userId){
         Jedis jedis = jedisUtil.getJedis();
         return jedis.sismember("fans-"+String.valueOf(userId),String.valueOf(otherUserId));

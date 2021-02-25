@@ -13,4 +13,8 @@ public interface AnswerDao {
     int addAnswer(Answer answer);
     Long countAnswersByUser_Id(Long id);
     Long countAnswersByUser_IdAndUseful(@Param("IdUser") Long IdUser, @Param("useful") boolean useful);
+    List<Answer> findAnswerByUser_IdOrderByCreatedDateDesc(Long id);
+    List<Answer> findAnswerByUser_IdAndUsefulOrderByCreatedDateDesc(@Param("id") Long id,@Param("useful")Boolean useful);
+    void setUsefulForAnswer(@Param("state")Boolean state, @Param("answerId")Long answerID);
+    void deleteAnswerById(Long answerid);
 }

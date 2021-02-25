@@ -31,4 +31,26 @@
         from answer
         WHERE id_user=#{IdUser} AND useful=#{useful}
     </select>
+
+    <select id="findAnswerByUser_IdOrderByCreatedDateDesc" resultType="com.jsq.forum.model.Answer">
+        select id,content,useful,created_date,code,id_user,id_topic
+        from answer
+        where id_user = #{id}
+        order by created_date DESC
+    </select>
+
+    <select id="findAnswerByUser_IdAndUsefulOrderByCreatedDateDesc" resultType="com.jsq.forum.model.Answer">
+        select id,content,useful,created_date,code,id_user,id_topic
+        from answer
+        where id_user = #{id} AND useful=#{useful}
+        order by created_date DESC
+    </select>
+
+    <update id="setUsefulForAnswer">
+        update answer set useful=#{state} where id=#{answerId}
+    </update>
+
+    <delete id="deleteAnswerById">
+        delete from answer where id = #{answerid}
+    </delete>
 </mapper>

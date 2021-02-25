@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -73,5 +74,20 @@ public class ProfileController {
         model.addAttribute("commonFansNum", followService.getCommonFans(user.getId(), otherUser.getId()).size());
         model.addAttribute("isFollowed", isFollowed);
         return "profile";
+    }
+
+
+    @RequestMapping(path="/follow/{userId}_{otherUserId}",method= RequestMethod.POST)
+    @ResponseBody
+    public String addFollow(@PathVariable Long userId, @PathVariable Long otherUserId) {
+        followService.addFollow(userId,otherUserId);
+        return "follow success!";
+    }
+
+    @RequestMapping(path="/unfollow/{userId}_{otherUserId}",method= RequestMethod.POST)
+    @ResponseBody
+    public String deleteFollow(@PathVariable Long userId, @PathVariable Long otherUserId) {
+        followService.deleteFollow(userId,otherUserId);
+        return "unfollow success!";
     }
 }

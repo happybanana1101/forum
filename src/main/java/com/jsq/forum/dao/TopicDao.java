@@ -13,4 +13,6 @@ public interface TopicDao {
     Topic findTopicById(@Param("id") Long id);
     int addTopic(Topic topic);
     long countTopicsByUser_Id(Long id);
+    List<Topic> findTopicsByUser_IdOrderByCreatedDateDesc(Long userId);
+
 }

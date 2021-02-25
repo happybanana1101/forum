@@ -6,6 +6,7 @@ import com.jsq.forum.model.PageBean;
 import com.jsq.forum.model.Topic;
 import com.jsq.forum.model.User;
 import com.jsq.forum.service.PageService;
+import com.jsq.forum.service.TopicService;
 import com.jsq.forum.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,12 +27,17 @@ public class TopicsController {
     AnswerDao answerDao;
     @Autowired
     UserDao userDao;
+    @Autowired
+    TopicService topicService;
+
+
+
     @RequestMapping(path="/topics/{category}/{currentPage}", method= RequestMethod.GET)
     public String displayTopicPage(@PathVariable String category, @PathVariable int currentPage, Model model) {
         PageBean<Topic> pageTopic = pageService.findItemByPage(category,currentPage,10);
         List<Topic> pageList = pageTopic.getItems();
         String header = setHeader(category);
-        int topicsTotalNum=pageList==null?0:pageList.size();
+        int topicsTotalNum=topicService.getTopicsByCategory(category).size();
         User user = hostHolder.getUser();
         model.addAttribute("user", user);
         model.addAttribute("topics",pageList);
@@ -47,6 +53,28 @@ public class TopicsController {
         return "topics";
     }
 
+    @RequestMapping(path = "/topics/user/{id}_{currentPage}", method = RequestMethod.GET)
+    public String displayTopicsByUser(@PathVariable String id, @PathVariable int currentPage, Model model) {
+//		List<Topic> topics = topicsService.getTopicsByUser(id);
+        PageBean<Topic> pageTopic=pageService.findItemByUser(id, currentPage, 10);
+        List<Topic> topics=pageTopic.getItems();
+        int topicsTotalNum=topicService.getTopicsByUser(id).size();
+        String header = setHeader("user");
+
+        User user=hostHolder.getUser();
+        model.addAttribute("user", user);
+        //model.addAttribute("newMessage", messageDao.countMessageByToId(user.getId()));
+        model.addAttribute("topics", topics);
+        model.addAttribute("header", header);
+        model.addAttribute("answerDao", answerDao);
+        model.addAttribute("userDao", userDao);
+        model.addAttribute("currentPage", pageTopic.getCurrentPage());
+        model.addAttribute("totalPage", pageTopic.getTotalPage());
+        model.addAttribute("hasNext", pageTopic.getIsMore());
+        model.addAttribute("topicsTotalNum", topicsTotalNum);
+        model.addAttribute("isUserTopicPage", true);
+        return "topics";
+    }
 
     private String setHeader(String category) {
         switch (category) {

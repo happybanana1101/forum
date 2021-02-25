@@ -16,6 +16,11 @@ public class PageService {
     private TopicDao topicDao;
     public PageBean<Topic> findItemByPage(String category,int currentPage,int pageSize){
         int countNum = 0;
+        if(category.equals("all")) {
+            countNum=topicDao.findAll().size();
+        }else{
+            countNum = topicDao.findTopicsByCategoryOrderByCreatedDateDesc(category).size(); // 全部商品
+        }
         PageHelper.startPage(currentPage,pageSize);
         List<Topic> allTopic = null;
         if(category.equals("all")){
@@ -23,7 +28,17 @@ public class PageService {
         }else {
             allTopic = topicDao.findTopicsByCategoryOrderByCreatedDateDesc(category);
         }
-        countNum = allTopic==null?0:allTopic.size();
+        PageBean<Topic> pageData = new PageBean<>(currentPage,pageSize,countNum);
+        pageData.setItems(allTopic);
+        return pageData;
+    }
+
+    public PageBean<Topic> findItemByUser(String id,int currentPage,int pageSize){
+        int countNum = 0;
+        countNum = topicDao.findTopicsByUser_IdOrderByCreatedDateDesc(Long.valueOf(id)).size(); // 总记录数
+        PageHelper.startPage(currentPage,pageSize);
+        List<Topic> allTopic = null;
+        allTopic = topicDao.findTopicsByUser_IdOrderByCreatedDateDesc(Long.parseLong(id));
         PageBean<Topic> pageData = new PageBean<>(currentPage,pageSize,countNum);
         pageData.setItems(allTopic);
         return pageData;

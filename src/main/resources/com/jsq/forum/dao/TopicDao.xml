@@ -30,4 +30,12 @@
         from topic
         where id_user=#{id}
     </select>
+
+    <select id="findTopicsByUser_IdOrderByCreatedDateDesc" resultType="com.jsq.forum.model.Topic">
+        select id,title,content,category,created_date,code,id_user
+        from topic
+        where id_user = #{userId}
+        order by created_date DESC
+    </select>
+
 </mapper>

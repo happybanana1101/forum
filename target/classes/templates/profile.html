@@ -24,7 +24,7 @@
 						</form>
 					</span>
 						<span th:if="${user.getId() != otherUser.getId() and isFollowed}" class="chip right">
-						<form>
+						<form th:action="@{'/unfollow/'+${user.getId()}+'_'+${otherUser.getId()}}" method="post">
 							<input type="hidden" name="action" th:value="useful" /> 
 								<button class="chip left" style="background-color: #37b7ab;">已关注</button>
 						</form>

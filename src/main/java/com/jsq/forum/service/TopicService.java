@@ -4,6 +4,7 @@ import com.jsq.forum.dao.AnswerDao;
 import com.jsq.forum.dao.TopicDao;
 import com.jsq.forum.dao.UserDao;
 import com.jsq.forum.model.Answer;
+import com.jsq.forum.model.Topic;
 import com.jsq.forum.model.User;
 import com.jsq.forum.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.xml.ws.Holder;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class TopicService {
@@ -47,5 +49,17 @@ public class TopicService {
 //            eventModel.setEntityOwnerId(topicDao.getId_userById(Long.parseLong(id_topic)));
 //            eventProducer.fireEvent(eventModel);
 //        }
+    }
+
+    public List<Topic> getTopicsByUser(String userId){
+        return topicDao.findTopicsByUser_IdOrderByCreatedDateDesc(Long.valueOf(userId));
+    }
+
+    public List<Topic> getTopicsByCategory(String category){
+        if (category.equals("all")) {
+            return topicDao.findAll();
+        } else {
+            return topicDao.findTopicsByCategoryOrderByCreatedDateDesc(category);
+        }
     }
 }
