@@ -20,4 +20,14 @@
         from topic
         where id = #{id}
     </select>
+
+    <insert id="addTopic" parameterType="com.jsq.forum.model.Topic">
+        insert into topic (category,code,content,created_date,title,id_user) values (#{category},#{code},#{content},#{createdDate},#{title},#{idUser})
+    </insert>
+
+    <select id="countTopicsByUser_Id" resultType="long">
+        select count(*)
+        from topic
+        where id_user=#{id}
+    </select>
 </mapper>

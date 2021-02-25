@@ -24,7 +24,7 @@ public class RegisterService {
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
         user.setIntroduction(introduction);
-        user.setCreated_date(new Date());
+        user.setCreatedDate(new Date());
         userDao.addUser(user);
         return "/login";
     }

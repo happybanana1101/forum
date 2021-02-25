@@ -15,6 +15,9 @@ public class Answer {
     private String code;   //代码
     private Integer idTopic; //帖子id
     private Integer idUser;  //userId
+
+    private User user;
+    private Topic topic;
     public String displayParsedCreatedDate() {
         SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd HH:mm");
         return formatter.format(this.createdDate);

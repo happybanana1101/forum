@@ -6,13 +6,18 @@
     <insert id="addUser" parameterType="com.jsq.forum.model.User">
         insert into user (username,password,introduction,created_date) values (#{username},#{password},#{introduction},#{created_date})
     </insert>
-    <select id="getUserByUsername" resultType="com.jsq.forum.model.User">
-        select *
+    <select id="getUserByUsername" resultType="com.jsq.forum.model.User" parameterType="String">
+        select id,username,password,introduction,created_date
         from user b
         where b.username= #{username}
     </select>
     <select id="getUsernameById" resultType="String">
         select username
+        from user
+        where id = #{userId}
+    </select>
+    <select id="getUserById" resultType="com.jsq.forum.model.User">
+        select *
         from user
         where id = #{userId}
     </select>

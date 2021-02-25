@@ -10,4 +10,7 @@ import java.util.List;
 public interface AnswerDao {
     Long countAnswersByTopic_Id(@Param("idTopic") Long idTopic);
     List<Answer> findAnswerByTopic_Id(@Param("idTopic") Long idTopic);
+    int addAnswer(Answer answer);
+    Long countAnswersByUser_Id(Long id);
+    Long countAnswersByUser_IdAndUseful(@Param("IdUser") Long IdUser, @Param("useful") boolean useful);
 }

@@ -6,6 +6,7 @@ import com.jsq.forum.dao.UserDao;
 import com.jsq.forum.model.Answer;
 import com.jsq.forum.model.Topic;
 import com.jsq.forum.model.User;
+import com.jsq.forum.service.TopicService;
 import com.jsq.forum.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +14,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -26,6 +31,10 @@ public class TopicController {
     AnswerDao answerDao;
     @Autowired
     UserDao userDao;
+    @Autowired
+    TopicService topicService;
+
+
     @RequestMapping(path = "/topic/{id}", method = RequestMethod.GET)
     public String displayTopic(@PathVariable String id, Model model) {
         User user = hostHolder.getUser();
@@ -42,7 +51,16 @@ public class TopicController {
         model.addAttribute("idUser", idUser);
         model.addAttribute("userDao", userDao);
 
-
         return "topic";
+    }
+
+    @RequestMapping(path = "/topic", method = RequestMethod.POST)
+    public View addAnswer(@RequestParam("content") String content, @RequestParam("code") String code,
+                          @RequestParam("id_topic") String id_topic, @RequestParam("id_user") String id_user,
+                          HttpServletRequest request) {
+
+        topicService.addAnswer(content, code, id_topic, id_user);
+        String contextPath = request.getContextPath();
+        return new RedirectView(contextPath + "/topic/" + id_topic);
     }
 }

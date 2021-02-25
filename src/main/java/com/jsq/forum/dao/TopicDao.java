@@ -11,4 +11,6 @@ public interface TopicDao {
     List<Topic> findAll();
     List<Topic> findTopicsByCategoryOrderByCreatedDateDesc(@Param("category") String category);
     Topic findTopicById(@Param("id") Long id);
+    int addTopic(Topic topic);
+    long countTopicsByUser_Id(Long id);
 }
