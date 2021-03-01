@@ -4,6 +4,7 @@ import com.jsq.forum.dao.TopicDao;
 import com.jsq.forum.dao.UserDao;
 import com.jsq.forum.model.Topic;
 import com.jsq.forum.model.User;
+import com.jsq.forum.service.RankService;
 import com.jsq.forum.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,8 @@ public class AddTopicController {
     UserDao userDao;
     @Autowired
     TopicDao topicDao;
+    @Autowired
+    RankService rankService;
 
     @RequestMapping(path = "/addTopic", method = RequestMethod.GET)
     public String displayMyProfile(Model model) {
@@ -38,6 +41,7 @@ public class AddTopicController {
     public View addTask(@RequestParam("category") String category, @RequestParam("title") String title,
                         @RequestParam("content") String content, @RequestParam("code") String code,
                         @RequestParam("id_user") String id_user, HttpServletRequest request) {
+        User user = hostHolder.getUser();
         Topic topic = new Topic();
         topic.setCategory(category);
         topic.setTitle(title);
@@ -46,8 +50,9 @@ public class AddTopicController {
         else topic.setCode(code);
         topic.setCreatedDate(new Date());
         topic.setIdUser(Integer.parseInt(id_user));
-        topic.setUser(userDao.getUserById(Long.parseLong(id_user)));
+        topic.setUser(user);
         topicDao.addTopic(topic);
+        rankService.changepoint(user.getUsername(),"addtopic");
         String contextPath = request.getContextPath();
         return new RedirectView(contextPath+"/topics/"+category+"/1");
     }

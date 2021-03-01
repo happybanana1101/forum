@@ -15,6 +15,8 @@ public class RegisterService {
     UserDao userDao;
     @Autowired
     PasswordEncoder passwordEncoder;
+    @Autowired
+    RankService rankService;
     public String reg(String username,String password,String introduction){
         User user = userDao.getUserByUsername(username);
         if (user!=null || password==null || password.equals("")){
@@ -26,6 +28,7 @@ public class RegisterService {
         user.setIntroduction(introduction);
         user.setCreatedDate(new Date());
         userDao.addUser(user);
+        rankService.addUser(username);
         return "/login";
     }
 }

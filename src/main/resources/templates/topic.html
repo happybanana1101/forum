@@ -67,6 +67,7 @@
 						<input type="hidden" name="state" th:value="${answer.isUseful()}" />
 						<input type="hidden" name="action" th:value="useful" /> 
 						<input type="hidden" name="id_topic" th:value="${topic.getId()}" />
+						<input type="hidden" name="username" th:value="${userDao.getUsernameById(answer.getIdUser())}"/>
 						<button class="chip left" style="background-color: #37b7ab;">Set useful/useless</button>
 					</form>
 				</span> 
@@ -75,6 +76,8 @@
 						<input type="hidden" name="id_answer" th:value="${answer.getId()}" />
 						<input type="hidden" name="action" th:value="delete" /> 
 						<input type="hidden" name="id_topic" th:value="${topic.getId()}" />
+						<input type="hidden" name="username" th:value="${userDao.getUsernameById(answer.getIdUser())}" />
+						<input type="hidden" name="state" th:value="${answer.isUseful()}" />
 						<button class="chip left" style="background-color: #37b7ab;">Delete</button>
 					</form>
 				</span>

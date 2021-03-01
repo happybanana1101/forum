@@ -24,7 +24,8 @@ public class TopicService {
     HostHolder hostHolder;
     @Autowired
     AnswerDao answerDao;
-
+    @Autowired
+    RankService rankService;
     public void addAnswer(String content,String code,String id_topic,String id_user){
         Answer answer = new Answer();
         answer.setContent(content);
@@ -37,18 +38,8 @@ public class TopicService {
         answer.setUser(userDao.getUserById(Long.parseLong(id_user)));
         answer.setUseful(false);
         answerDao.addAnswer(answer);
-        // 触发评论的异步队列
         User user = hostHolder.getUser();
-        // 如果评论自己的话题不会触发站内信通知
-//        if (user.getId() != topicDao.getId_userById(Long.parseLong(id_topic))) {
-//            EventModel eventModel = new EventModel(EventType.COMMENT);
-//            eventModel.setCreatedDate(new Date());
-//            eventModel.setActorId(Integer.parseInt(String.valueOf(user.getId())));
-//            eventModel.setEntityId(Integer.valueOf(id_topic));
-//            eventModel.setEntityType(EntityType.ENTITY_COMMENT);
-//            eventModel.setEntityOwnerId(topicDao.getId_userById(Long.parseLong(id_topic)));
-//            eventProducer.fireEvent(eventModel);
-//        }
+        rankService.changepoint(user.getUsername(),"addAnswer");
     }
 
     public List<Topic> getTopicsByUser(String userId){

@@ -6,6 +6,7 @@ import com.jsq.forum.dao.UserDao;
 import com.jsq.forum.model.Answer;
 import com.jsq.forum.model.Topic;
 import com.jsq.forum.model.User;
+import com.jsq.forum.service.RankService;
 import com.jsq.forum.service.TopicService;
 import com.jsq.forum.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,17 +34,20 @@ public class TopicController {
     UserDao userDao;
     @Autowired
     TopicService topicService;
-
+    @Autowired
+    RankService rankService;
 
     @RequestMapping(path = "/topic/{id}", method = RequestMethod.POST)
     public View updateAnswer(@RequestParam String id_topic, @RequestParam String action, @RequestParam String id_answer,
-                             @RequestParam(required = false) String state, HttpServletRequest request) {
+                             @RequestParam(required = false) String state, @RequestParam String username,HttpServletRequest request) {
         switch (action){
             case "useful":
                 answerDao.setUsefulForAnswer(!Boolean.valueOf(state),Long.parseLong(id_answer));
+                rankService.changepoint(username,"setuseful",!Boolean.valueOf(state));
                 break;
             case "delete":
                 answerDao.deleteAnswerById(Long.parseLong(id_answer));
+                rankService.changepoint(username,"deleteAnswer",!Boolean.valueOf(state));
                 break;
         }
 

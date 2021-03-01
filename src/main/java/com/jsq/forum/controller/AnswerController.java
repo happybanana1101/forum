@@ -5,6 +5,7 @@ import com.jsq.forum.dao.TopicDao;
 import com.jsq.forum.model.Answer;
 import com.jsq.forum.model.Topic;
 import com.jsq.forum.model.User;
+import com.jsq.forum.service.RankService;
 import com.jsq.forum.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +24,8 @@ public class AnswerController {
     AnswerDao answerDao;
     @Autowired
     TopicDao topicDao;
-
+    @Autowired
+    RankService rankService;
 
     @RequestMapping(path = "/answers/{id}", method = RequestMethod.GET)
     public String displayAnswersByUser(@PathVariable String id, Model model) {
@@ -39,7 +41,6 @@ public class AnswerController {
     @RequestMapping(path = "/answers/useful/{id}", method = RequestMethod.GET)
     public String displayUsefulAnswersByUser(@PathVariable String id, Model model) {
         List<Answer> answers = answerDao.findAnswerByUser_IdAndUsefulOrderByCreatedDateDesc(Long.parseLong(id), true);
-
         User user=hostHolder.getUser();
         model.addAttribute("user",user);
         //model.addAttribute("newMessage", messageDao.countMessageByToId(user.getId()));

@@ -4,7 +4,7 @@
 
 <mapper namespace="com.jsq.forum.dao.UserDao">
     <insert id="addUser" parameterType="com.jsq.forum.model.User">
-        insert into user (username,password,introduction,created_date) values (#{username},#{password},#{introduction},#{created_date})
+        insert into user (username,password,introduction,created_date) values (#{username},#{password},#{introduction},#{createdDate})
     </insert>
     <select id="getUserByUsername" resultType="com.jsq.forum.model.User" parameterType="String">
         select id,username,password,introduction,created_date
@@ -20,5 +20,11 @@
         select *
         from user
         where id = #{userId}
+    </select>
+
+    <select id="getUserIdByUsername">
+        select id
+        from user
+        where username = #{username}
     </select>
 </mapper>
