@@ -6,6 +6,7 @@ import com.jsq.forum.dao.UserDao;
 import com.jsq.forum.model.Answer;
 import com.jsq.forum.model.User;
 import com.jsq.forum.service.FollowService;
+import com.jsq.forum.service.RankService;
 import com.jsq.forum.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,21 +31,20 @@ public class ProfileController {
     AnswerDao answerDao;
     @Autowired
     FollowService followService;
-
+    @Autowired
+    RankService rankService;
 
     @RequestMapping(path = "/profile", method = RequestMethod.GET)
     public String displayMyProfile(Model model) {
         User user = hostHolder.getUser();
-        //Long points = userDao.getPoints(user.getId());
-//		jedisAdapter.zadd(rankKey, points, user.getUsername());
-
+        Double point = rankService.getPoint(user.getUsername());
         Long numberOfTopics = topicDao.countTopicsByUser_Id(user.getId());
         Long numberOfAnswers = answerDao.countAnswersByUser_Id(user.getId());
         Long numberOfHelped = answerDao.countAnswersByUser_IdAndUseful(user.getId(), true);
 
         model.addAttribute("user", user);
         //model.addAttribute("newMessage", messageDao.countMessageByToId(user.getId()));
-        //model.addAttribute("points", points);
+        model.addAttribute("points", point);
         model.addAttribute("numberOfTopics", numberOfTopics);
         model.addAttribute("numberOfAnswers", numberOfAnswers);
         model.addAttribute("numberOfHelped", numberOfHelped);
@@ -55,7 +55,7 @@ public class ProfileController {
     @RequestMapping(path = "/profile/{id}", method = RequestMethod.GET)
     public String displayProfileById(@PathVariable Long id, Model model) {
         User user = userDao.getUserById(id);
-        //Long points = userDao.getPoints(user.getId());
+        Double point = rankService.getPoint(user.getUsername());
         Long numberOfTopics = topicDao.countTopicsByUser_Id(id);
         Long numberOfAnswers = answerDao.countAnswersByUser_Id(id);
         Long numberOfHelped = answerDao.countAnswersByUser_IdAndUseful(id, true);
@@ -65,7 +65,7 @@ public class ProfileController {
         model.addAttribute("user", otherUser);
         model.addAttribute("otherUser", user);
         //model.addAttribute("newMessage", messageDao.countMessageByToId(hostHolder.getUser().getId()));
-        //model.addAttribute("points", points);
+        model.addAttribute("points", point);
         model.addAttribute("numberOfTopics", numberOfTopics);
         model.addAttribute("numberOfAnswers", numberOfAnswers);
         model.addAttribute("numberOfHelped", numberOfHelped);

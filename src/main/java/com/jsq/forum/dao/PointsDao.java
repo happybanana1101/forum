@@ -26,4 +26,8 @@ public class PointsDao {
                                 break;
         }
     }
+    public Double getPoint(String username){
+        Jedis jedis = jedisUtil.getJedis();
+        return jedis.zscore("points",username);
+    }
 }

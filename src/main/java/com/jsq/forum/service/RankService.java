@@ -20,4 +20,8 @@ public class RankService {
     public void changepoint(String userId,String option){
         pointsDao.changePoint(userId,option,false);
     }
+
+    public Double getPoint(String username){
+        return pointsDao.getPoint(username);
+    }
 }
