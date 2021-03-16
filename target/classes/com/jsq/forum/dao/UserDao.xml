@@ -22,7 +22,13 @@
         where id = #{userId}
     </select>
 
-    <select id="getUserIdByUsername">
+    <select id="getUserIdByUsername" resultType="long">
+        select id
+        from user
+        where username = #{username}
+    </select>
+
+    <select id="getIdByUsername" resultType="long">
         select id
         from user
         where username = #{username}

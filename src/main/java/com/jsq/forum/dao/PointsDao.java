@@ -4,6 +4,9 @@ import com.jsq.forum.util.JedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import redis.clients.jedis.Jedis;
+
+import java.util.Set;
+
 @Repository
 public class PointsDao {
     @Autowired
@@ -29,5 +32,10 @@ public class PointsDao {
     public Double getPoint(String username){
         Jedis jedis = jedisUtil.getJedis();
         return jedis.zscore("points",username);
+    }
+
+    public Set<String> getPointSet(){
+        Jedis jedis = jedisUtil.getJedis();
+        return jedis.zrange("points",0,9);
     }
 }

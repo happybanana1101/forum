@@ -11,4 +11,5 @@ public interface UserDao {
     String getUsernameById(@Param("userId") Integer userId);
     User getUserById(@Param("userId")Long userId);
     Long getUserIdByUsername(String username);
+    Long getIdByUsername(String username);
 }

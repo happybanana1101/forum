@@ -4,6 +4,8 @@ import com.jsq.forum.dao.PointsDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 @Service
 public class RankService {
     @Autowired
@@ -24,4 +26,6 @@ public class RankService {
     public Double getPoint(String username){
         return pointsDao.getPoint(username);
     }
+
+    public Set<String> getPointSet(){ return  pointsDao.getPointSet();}
 }
