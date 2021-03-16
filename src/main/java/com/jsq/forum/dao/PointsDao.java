@@ -36,6 +36,6 @@ public class PointsDao {
 
     public Set<String> getPointSet(){
         Jedis jedis = jedisUtil.getJedis();
-        return jedis.zrange("points",0,9);
+        return jedis.zrevrange("points",0,9);
     }
 }
