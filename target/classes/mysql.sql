@@ -1,7 +1,7 @@
 CREATE DATABASE IF NOT EXISTS fzu_forum;
 use fzu_forum;
 -- User表
-CREATE TABLE `user` (
+CREATE TABLE IF NOT EXISTS `user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `created_date` datetime DEFAULT NULL,
   `introduction` varchar(16) DEFAULT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 -- topic表
-CREATE TABLE `topic` (
+CREATE TABLE IF NOT EXISTS `topic` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `category` varchar(16) NOT NULL,
   `code` varchar(1024) DEFAULT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE `topic` (
 ) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
 
 -- answer表
-CREATE TABLE `answer` (
+CREATE TABLE IF NOT EXISTS `answer` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `code` varchar(1024) DEFAULT NULL,
   `content` varchar(1024) NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE `answer` (
 ) ENGINE=InnoDB AUTO_INCREMENT=140 DEFAULT CHARSET=utf8;
 
 -- message表
-CREATE TABLE `message` (
+CREATE TABLE IF NOT EXISTS `message` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `from_id` bigint(20) DEFAULT NULL,
   `to_id` bigint(20) DEFAULT NULL,
@@ -51,11 +51,3 @@ CREATE TABLE `message` (
   `has_read` int(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8;
-
--- image表
-CREATE TABLE `image` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `imgUrl` varchar(100) NOT NULL,
-  `id_user` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
