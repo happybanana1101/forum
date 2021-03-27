@@ -9,6 +9,7 @@ import com.jsq.forum.model.User;
 import com.jsq.forum.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.xml.ws.Holder;
 import java.util.Date;
@@ -26,6 +27,7 @@ public class TopicService {
     AnswerDao answerDao;
     @Autowired
     RankService rankService;
+    @Transactional
     public void addAnswer(String content,String code,String id_topic,String id_user){
         Answer answer = new Answer();
         answer.setContent(content);

@@ -4,10 +4,13 @@ import java.util.Properties;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 import com.github.pagehelper.PageHelper;
 import org.springframework.context.annotation.ComponentScan;
+
+import javax.sql.DataSource;
 
 @SpringBootApplication
 @ComponentScan
@@ -15,7 +18,9 @@ public class ForumApplication {
 
 	public static void main(String[] args) {
 		//System.setProperty("spring.devtools.restart.enabled", "false");
-		SpringApplication.run(ForumApplication.class, args);
+		ConfigurableApplicationContext context = SpringApplication.run(ForumApplication.class, args);
+		DataSource dataSource = context.getBean(DataSource.class);
+		System.out.println(dataSource.getClass());
 	}
 	
 	// PageHelper的配置

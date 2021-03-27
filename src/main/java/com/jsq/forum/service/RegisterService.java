@@ -5,6 +5,7 @@ import com.jsq.forum.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -17,6 +18,9 @@ public class RegisterService {
     PasswordEncoder passwordEncoder;
     @Autowired
     RankService rankService;
+
+
+    @Transactional
     public String reg(String username,String password,String introduction){
         User user = userDao.getUserByUsername(username);
         if (user!=null || password==null || password.equals("")){
