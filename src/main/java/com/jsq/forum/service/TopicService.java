@@ -27,7 +27,7 @@ public class TopicService {
     AnswerDao answerDao;
     @Autowired
     RankService rankService;
-    @Transactional
+
     public void addAnswer(String content,String code,String id_topic,String id_user){
         Answer answer = new Answer();
         answer.setContent(content);

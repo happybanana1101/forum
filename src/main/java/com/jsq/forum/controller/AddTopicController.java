@@ -1,7 +1,9 @@
 package com.jsq.forum.controller;
 
+import com.jsq.forum.dao.MessageDao;
 import com.jsq.forum.dao.TopicDao;
 import com.jsq.forum.dao.UserDao;
+import com.jsq.forum.model.Message;
 import com.jsq.forum.model.Topic;
 import com.jsq.forum.model.User;
 import com.jsq.forum.service.RankService;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Controller
@@ -29,12 +32,16 @@ public class AddTopicController {
     TopicDao topicDao;
     @Autowired
     RankService rankService;
+    @Autowired
+    MessageDao messageDao;
 
     @RequestMapping(path = "/addTopic", method = RequestMethod.GET)
     public String displayMyProfile(Model model) {
         User user = hostHolder.getUser();
         //Long points = userDao.getPoints(user.getId());
+        List<Message> messages = messageDao.selectMessage(user.getId());
         model.addAttribute("user",user);
+        model.addAttribute("messages",messages);
         return "addTopic";
     }
     @RequestMapping(path = "/addTopic", method = RequestMethod.POST)
