@@ -38,4 +38,9 @@
         order by created_date DESC
     </select>
 
+    <select id="getUseridByTopicId" resultType="long">
+        select id_user
+        from topic
+        where id=#{topicid}
+    </select>
 </mapper>

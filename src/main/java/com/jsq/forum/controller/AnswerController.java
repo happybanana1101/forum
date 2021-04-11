@@ -1,6 +1,7 @@
 package com.jsq.forum.controller;
 
 import com.jsq.forum.dao.AnswerDao;
+import com.jsq.forum.dao.MessageDao;
 import com.jsq.forum.dao.TopicDao;
 import com.jsq.forum.model.Answer;
 import com.jsq.forum.model.Topic;
@@ -26,13 +27,14 @@ public class AnswerController {
     TopicDao topicDao;
     @Autowired
     RankService rankService;
-
+    @Autowired
+    MessageDao messageDao;
     @RequestMapping(path = "/answers/{id}", method = RequestMethod.GET)
     public String displayAnswersByUser(@PathVariable String id, Model model) {
         List<Answer> answers = answerDao.findAnswerByUser_IdOrderByCreatedDateDesc(Long.parseLong(id));
         User user=hostHolder.getUser();
         model.addAttribute("user",user);
-        //model.addAttribute("newMessage", messageDao.countMessageByToId(user.getId()));
+        model.addAttribute("newMessage", messageDao.countMessageByToId(user.getId()));
         model.addAttribute("answers", answers);
         model.addAttribute("topicDao", topicDao);
         return "answers";
@@ -43,7 +45,7 @@ public class AnswerController {
         List<Answer> answers = answerDao.findAnswerByUser_IdAndUsefulOrderByCreatedDateDesc(Long.parseLong(id), true);
         User user=hostHolder.getUser();
         model.addAttribute("user",user);
-        //model.addAttribute("newMessage", messageDao.countMessageByToId(user.getId()));
+        model.addAttribute("newMessage", messageDao.countMessageByToId(user.getId()));
         model.addAttribute("answers", answers);
         model.addAttribute("topicDao", topicDao);
         return "answers";

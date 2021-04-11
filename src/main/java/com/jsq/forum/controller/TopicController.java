@@ -1,11 +1,13 @@
 package com.jsq.forum.controller;
 
 import com.jsq.forum.dao.AnswerDao;
+import com.jsq.forum.dao.MessageDao;
 import com.jsq.forum.dao.TopicDao;
 import com.jsq.forum.dao.UserDao;
 import com.jsq.forum.model.Answer;
 import com.jsq.forum.model.Topic;
 import com.jsq.forum.model.User;
+import com.jsq.forum.service.MessageService;
 import com.jsq.forum.service.RankService;
 import com.jsq.forum.service.TopicService;
 import com.jsq.forum.util.HostHolder;
@@ -36,6 +38,10 @@ public class TopicController {
     TopicService topicService;
     @Autowired
     RankService rankService;
+    @Autowired
+    MessageService messageService;
+    @Autowired
+    MessageDao messageDao;
 
     @RequestMapping(path = "/topic/{id}", method = RequestMethod.POST)
     public View updateAnswer(@RequestParam String id_topic, @RequestParam String action, @RequestParam String id_answer,
@@ -64,7 +70,7 @@ public class TopicController {
 
 
         model.addAttribute("user", user);
-        //model.addAttribute("newMessage", messageDao.countMessageByToId(user.getId()));
+        model.addAttribute("newMessage", messageDao.countMessageByToId(user.getId()));
         model.addAttribute("topic", topic);
         model.addAttribute("answers", answers);
         model.addAttribute("idUser", idUser);
@@ -79,6 +85,10 @@ public class TopicController {
                           HttpServletRequest request) {
 
         topicService.addAnswer(content, code, id_topic, id_user);
+        long topicid_user = topicDao.getUseridByTopicId(Long.valueOf(id_topic));
+        if(topicid_user!=Long.valueOf(id_user)){
+            messageService.addMessage(Long.valueOf(id_user),topicid_user,content,Long.valueOf(id_topic));
+        }
         String contextPath = request.getContextPath();
         return new RedirectView(contextPath + "/topic/" + id_topic);
     }

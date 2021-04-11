@@ -14,5 +14,5 @@ public interface TopicDao {
     int addTopic(Topic topic);
     long countTopicsByUser_Id(Long id);
     List<Topic> findTopicsByUser_IdOrderByCreatedDateDesc(Long userId);
-
+    long getUseridByTopicId(Long topicid);
 }

@@ -1,6 +1,7 @@
 package com.jsq.forum.controller;
 
 import com.jsq.forum.dao.AnswerDao;
+import com.jsq.forum.dao.MessageDao;
 import com.jsq.forum.dao.TopicDao;
 import com.jsq.forum.dao.UserDao;
 import com.jsq.forum.model.Answer;
@@ -33,6 +34,8 @@ public class ProfileController {
     FollowService followService;
     @Autowired
     RankService rankService;
+    @Autowired
+    MessageDao messageDao;
 
     @RequestMapping(path = "/profile", method = RequestMethod.GET)
     public String displayMyProfile(Model model) {
@@ -43,7 +46,7 @@ public class ProfileController {
         Long numberOfHelped = answerDao.countAnswersByUser_IdAndUseful(user.getId(), true);
 
         model.addAttribute("user", user);
-        //model.addAttribute("newMessage", messageDao.countMessageByToId(user.getId()));
+        model.addAttribute("newMessage", messageDao.countMessageByToId(user.getId()));
         model.addAttribute("points", point);
         model.addAttribute("numberOfTopics", numberOfTopics);
         model.addAttribute("numberOfAnswers", numberOfAnswers);
@@ -64,7 +67,7 @@ public class ProfileController {
 
         model.addAttribute("user", otherUser);
         model.addAttribute("otherUser", user);
-        //model.addAttribute("newMessage", messageDao.countMessageByToId(hostHolder.getUser().getId()));
+        model.addAttribute("newMessage", messageDao.countMessageByToId(hostHolder.getUser().getId()));
         model.addAttribute("points", point);
         model.addAttribute("numberOfTopics", numberOfTopics);
         model.addAttribute("numberOfAnswers", numberOfAnswers);

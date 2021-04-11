@@ -1,6 +1,7 @@
 package com.jsq.forum.controller;
 
 import com.jsq.forum.dao.AnswerDao;
+import com.jsq.forum.dao.MessageDao;
 import com.jsq.forum.dao.UserDao;
 import com.jsq.forum.model.PageBean;
 import com.jsq.forum.model.Topic;
@@ -29,7 +30,8 @@ public class TopicsController {
     UserDao userDao;
     @Autowired
     TopicService topicService;
-
+    @Autowired
+    MessageDao messageDao;
 
 
     @RequestMapping(path="/topics/{category}/{currentPage}", method= RequestMethod.GET)
@@ -49,7 +51,7 @@ public class TopicsController {
         model.addAttribute("hasNext", pageTopic.getIsMore());
         model.addAttribute("isUserTopicPage", false);
         model.addAttribute("topicsTotalNum", topicsTotalNum);
-        //model.addAttribute("newMessage", messageDao.countMessageByToId(user.getId()));
+        model.addAttribute("newMessage", messageDao.countMessageByToId(user.getId()));
         return "topics";
     }
 
@@ -63,7 +65,7 @@ public class TopicsController {
 
         User user=hostHolder.getUser();
         model.addAttribute("user", user);
-        //model.addAttribute("newMessage", messageDao.countMessageByToId(user.getId()));
+        model.addAttribute("newMessage", messageDao.countMessageByToId(user.getId()));
         model.addAttribute("topics", topics);
         model.addAttribute("header", header);
         model.addAttribute("answerDao", answerDao);
