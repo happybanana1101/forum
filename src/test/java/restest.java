@@ -13,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import redis.clients.jedis.Jedis;
 
+import java.sql.DataTruncation;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -30,9 +32,12 @@ public class restest {
 
     @Test
     public void t(){
+        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         List<Message> messages = messageDao.selectMessage(51);
         for (Message message:messages){
-            System.out.println(message.toString());
+            String format = ft.format(message.getCreated_Date());
+            System.out.println(format);
+
         }
     }
 }

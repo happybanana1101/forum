@@ -34,8 +34,8 @@
                                          <div class="chip" th:text="${userDao.getUsernameById(message.getFrom_id())}">用户</div>
                                     </a>
                                 </td>
-<!--								<td th:text="${#dates.format(message.getCreated_date(), 'yyyy-MM-dd HH:mm')}">创建时间</td>-->
-								<td th:text="${message.getCreated_Date()}">创建时间</td>
+								<td th:text="${#dates.format(message.getCreated_Date(), 'yyyy-MM-dd HH:mm')}">创建时间</td>
+
 								<td th:text="${message.getContent()}">内容</td>
 								<!-- <td>
 									<a th:href="@{'/topic/' + ${message.getIdTopic()}}" class="btn btn-floating pulse">
@@ -46,7 +46,7 @@
 								
 								<!-- 改成form表单来提交 -->
 								<td>
-									<form th:action="@{'/topicM/' + ${message.getId_topic()} + '_' + ${message.getTo_id()}}" method="get">
+									<form th:action="@{'/topic/' + ${message.getId_topic()} }" method="get">
 										<button class="btn btn-floating pulse" type="submit">
 											<i class="material-icons">arrow_forward</i>
 										</button>

@@ -5,8 +5,19 @@
     <insert id="addMessage" parameterType="com.jsq.forum.model.Message">
         insert into Message (from_id,to_id,content,created_date,id_topic,has_read) values (#{from_id},#{to_id},#{content},#{created_Date},#{id_topic},#{has_read})
     </insert>
+    <resultMap id="Message" type="com.jsq.forum.model.Message">
+        <id column="id"  property="id" />
+        <result column="from_id"  property="from_id"/>
+        <result column="to_id"  property="to_id" />
+        <result column="content" property="content" />
+        <result column="created_date" property="created_Date" />
+        <result column="id_topic"  property="id_topic"/>
+        <result column="has_read"  property="has_read"/>
 
-    <select id="selectMessage" resultType="com.jsq.forum.model.Message" >
+    </resultMap>
+
+
+    <select id="selectMessage" resultMap="Message" >
         select * from Message where to_id = #{id}
     </select>
 
@@ -14,7 +25,7 @@
         select * from Message where to_id = #{id} and has_read=0
     </select>
 
-    <select id="countMessageByToId" resultType="int">
-        select count(1) from Message where id = #{id}
+    <select id="countMessageByToId" parameterType="long" resultType="int">
+        select count(1) from Message where to_id = #{id}
     </select>
 </mapper>
