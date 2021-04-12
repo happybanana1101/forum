@@ -28,4 +28,8 @@
     <select id="countMessageByToId" parameterType="long" resultType="int">
         select count(1) from Message where to_id = #{id}
     </select>
+
+    <update id="deleteMessage" parameterType="long">
+        delete from message where id_topic=#{id}
+    </update>
 </mapper>

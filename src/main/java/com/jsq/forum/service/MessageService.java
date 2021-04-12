@@ -22,4 +22,8 @@ public class MessageService {
         message.setId_topic(id_topic);
         messageDao.addMessage(message);
     }
+
+    public void deleteMessage(long id){
+        messageDao.deleteMessage(id);
+    }
 }

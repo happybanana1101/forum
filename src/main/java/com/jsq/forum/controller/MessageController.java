@@ -8,6 +8,7 @@ import com.jsq.forum.model.Answer;
 import com.jsq.forum.model.Message;
 import com.jsq.forum.model.Topic;
 import com.jsq.forum.model.User;
+import com.jsq.forum.service.MessageService;
 import com.jsq.forum.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,7 +32,8 @@ public class MessageController {
     TopicDao topicDao;
     @Autowired
     AnswerDao answerDao;
-
+    @Autowired
+    MessageService messageService;
 
 
     @RequestMapping(path = "/message", method = RequestMethod.GET)
@@ -62,8 +64,7 @@ public class MessageController {
         model.addAttribute("idUser", idUser);
         model.addAttribute("userDao", userDao);
 
-
-
+        messageService.deleteMessage(Long.valueOf(id));
         return "topic";
     }
 }

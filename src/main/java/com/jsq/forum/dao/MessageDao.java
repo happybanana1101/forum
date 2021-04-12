@@ -11,4 +11,5 @@ public interface MessageDao {
     List<Message> selectMessage(long id);
     List<Message> selectUnReadMessage(long id);
     int countMessageByToId(long id);
+    void deleteMessage(long id);
 }
