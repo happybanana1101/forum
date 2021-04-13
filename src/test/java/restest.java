@@ -1,7 +1,9 @@
 import com.jsq.forum.ForumApplication;
 import com.jsq.forum.dao.MessageDao;
+import com.jsq.forum.dao.TopicDao;
 import com.jsq.forum.dao.UserDao;
 import com.jsq.forum.model.Message;
+import com.jsq.forum.model.Topic;
 import com.jsq.forum.model.User;
 import com.jsq.forum.util.JedisUtil;
 import org.junit.Test;
@@ -29,15 +31,24 @@ public class restest {
     JedisUtil jedisUtil;
     @Autowired
     MessageDao messageDao;
+    @Autowired
+    TopicDao topicDao;
 
     @Test
     public void t(){
-        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        List<Message> messages = messageDao.selectMessage(51);
-        for (Message message:messages){
-            String format = ft.format(message.getCreated_Date());
-            System.out.println(format);
-
+        Jedis jedis = jedisUtil.getJedis();
+        Integer integer = Integer.valueOf("123");
+        System.out.println(integer);
+        Topic topic = topicDao.findTopicById((long)110);
+        try {
+            System.out.println(topic.getCreatedDate().toString());
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String date  = simpleDateFormat.format(topic.getCreatedDate());
+            System.out.println(date);
+            topic.setCreatedDate(simpleDateFormat.parse(jedis.hget("110","created_date")));
+            System.out.println(topic.getCreatedDate());
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 }

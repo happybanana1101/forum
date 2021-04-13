@@ -11,6 +11,7 @@ import com.jsq.forum.service.MessageService;
 import com.jsq.forum.service.RankService;
 import com.jsq.forum.service.TopicService;
 import com.jsq.forum.util.HostHolder;
+import com.jsq.forum.util.JedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,9 +21,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
+import redis.clients.jedis.Jedis;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class TopicController {
@@ -42,6 +45,8 @@ public class TopicController {
     MessageService messageService;
     @Autowired
     MessageDao messageDao;
+    @Autowired
+    JedisUtil jedisUtil;
 
     @RequestMapping(path = "/topic/{id}", method = RequestMethod.POST)
     public View updateAnswer(@RequestParam String id_topic, @RequestParam String action, @RequestParam String id_answer,
@@ -65,9 +70,8 @@ public class TopicController {
         User user = hostHolder.getUser();
         long idUser = user.getId();
 
-        Topic topic = topicDao.findTopicById(Long.valueOf(id));
+        Topic topic = topicService.getTopic(id);
         List<Answer> answers = answerDao.findAnswerByTopic_Id(Long.valueOf(id));
-
 
         model.addAttribute("user", user);
         model.addAttribute("newMessage", messageDao.countMessageByToId(user.getId()));

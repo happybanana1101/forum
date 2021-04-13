@@ -1,19 +1,23 @@
 package com.jsq.forum.service;
 
 import com.jsq.forum.dao.AnswerDao;
+import com.jsq.forum.dao.TopicCacheDao;
 import com.jsq.forum.dao.TopicDao;
 import com.jsq.forum.dao.UserDao;
 import com.jsq.forum.model.Answer;
 import com.jsq.forum.model.Topic;
 import com.jsq.forum.model.User;
 import com.jsq.forum.util.HostHolder;
+import com.jsq.forum.util.JedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import redis.clients.jedis.Jedis;
 
 import javax.xml.ws.Holder;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TopicService {
@@ -27,6 +31,12 @@ public class TopicService {
     AnswerDao answerDao;
     @Autowired
     RankService rankService;
+    @Autowired
+    JedisUtil jedisUtil;
+    @Autowired
+    TopicCacheDao topicCacheDao;
+
+
 
     public void addAnswer(String content,String code,String id_topic,String id_user){
         Answer answer = new Answer();
@@ -54,5 +64,17 @@ public class TopicService {
         } else {
             return topicDao.findTopicsByCategoryOrderByCreatedDateDesc(category);
         }
+    }
+
+    public Topic getTopic(String id){
+        Topic topic = new Topic();
+        Jedis jedis = jedisUtil.getJedis();
+        if (!jedis.exists(id)){
+            topic = topicDao.findTopicById(Long.valueOf(id));
+            topicCacheDao.addTopic(topic);
+        }else {
+            topic = topicCacheDao.getTopic(Long.valueOf(id));
+        }
+        return topic;
     }
 }

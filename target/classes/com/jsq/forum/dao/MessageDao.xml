@@ -29,7 +29,7 @@
         select count(1) from Message where to_id = #{id}
     </select>
 
-    <update id="deleteMessage" parameterType="long">
+    <delete id="deleteMessage" parameterType="long">
         delete from message where id_topic=#{id}
-    </update>
+    </delete>
 </mapper>
