@@ -18,15 +18,15 @@
 
 
     <select id="selectMessage" resultMap="Message" >
-        select * from Message where to_id = #{id}
+        select * from message where to_id = #{id}
     </select>
 
     <select id="selectUnReadMessage" resultType="com.jsq.forum.model.Message">
-        select * from Message where to_id = #{id} and has_read=0
+        select * from message where to_id = #{id} and has_read=0
     </select>
 
     <select id="countMessageByToId" parameterType="long" resultType="int">
-        select count(1) from Message where to_id = #{id}
+        select count(1) from message where to_id = #{id}
     </select>
 
     <delete id="deleteMessage" parameterType="long">

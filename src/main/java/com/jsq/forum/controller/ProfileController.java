@@ -80,17 +80,5 @@ public class ProfileController {
     }
 
 
-    @RequestMapping(path="/follow/{userId}_{otherUserId}",method= RequestMethod.POST)
-    @ResponseBody
-    public String addFollow(@PathVariable Long userId, @PathVariable Long otherUserId) {
-        followService.addFollow(userId,otherUserId);
-        return "follow success!";
-    }
 
-    @RequestMapping(path="/unfollow/{userId}_{otherUserId}",method= RequestMethod.POST)
-    @ResponseBody
-    public String deleteFollow(@PathVariable Long userId, @PathVariable Long otherUserId) {
-        followService.deleteFollow(userId,otherUserId);
-        return "unfollow success!";
-    }
 }

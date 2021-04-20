@@ -33,4 +33,10 @@
         from user
         where username = #{username}
     </select>
+
+    <select id="getIntroductionById" parameterType="long" resultType="String">
+        select introduction
+        from user
+        where id = #{id}
+    </select>
 </mapper>

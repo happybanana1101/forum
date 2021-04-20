@@ -12,4 +12,5 @@ public interface UserDao {
     User getUserById(@Param("userId")Long userId);
     Long getUserIdByUsername(String username);
     Long getIdByUsername(String username);
+    String getIntroductionById(long id);
 }
