@@ -10,6 +10,7 @@ import com.jsq.forum.service.RankService;
 import com.jsq.forum.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,6 +46,7 @@ public class AddTopicController {
         return "addTopic";
     }
     @RequestMapping(path = "/addTopic", method = RequestMethod.POST)
+    @Transactional
     public View addTask(@RequestParam("category") String category, @RequestParam("title") String title,
                         @RequestParam("content") String content, @RequestParam("code") String code,
                         @RequestParam("id_user") String id_user, HttpServletRequest request) {
