@@ -5,6 +5,6 @@ import redis.clients.jedis.Jedis;
 
 @Component
 public class JedisUtil {
-    private static Jedis jedis=new Jedis("localhost",6379);;
+    private static Jedis jedis=new Jedis("121.5.114.106",6379);
     public Jedis getJedis(){return jedis;}
 }

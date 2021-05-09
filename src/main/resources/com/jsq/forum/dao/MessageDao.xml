@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.jsq.forum.dao.MessageDao">
     <insert id="addMessage" parameterType="com.jsq.forum.model.Message">
-        insert into Message (from_id,to_id,content,created_date,id_topic,has_read) values (#{from_id},#{to_id},#{content},#{created_Date},#{id_topic},#{has_read})
+        insert into message (from_id,to_id,content,created_date,id_topic,has_read) values (#{from_id},#{to_id},#{content},#{created_Date},#{id_topic},#{has_read})
     </insert>
     <resultMap id="Message" type="com.jsq.forum.model.Message">
         <id column="id"  property="id" />

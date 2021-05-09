@@ -26,8 +26,8 @@ public class FansService {
         for (String s: allJedisFans){
             Fans fans = new Fans();
             fans.setId(Long.valueOf(s));
-            fans.setIntroduction(userDao.getIntroductionById(Long.valueOf(id)));
-            fans.setUsername(userDao.getUsernameById(Integer.valueOf(id)));
+            fans.setIntroduction(userDao.getIntroductionById(Long.valueOf(s)));
+            fans.setUsername(userDao.getUsernameById(Integer.valueOf(s)));
             allfans.add(fans);
         }
         return allfans;

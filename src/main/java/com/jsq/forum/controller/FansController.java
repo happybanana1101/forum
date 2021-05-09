@@ -55,7 +55,7 @@ public class FansController {
     @RequestMapping(path = "/fans/{id}", method = RequestMethod.GET)
     public String displayFans(@PathVariable String id, Model model){
         List<Fans> fans = fansService.getFans(id);
-        User user=hostHolder.getUser();
+        User user = hostHolder.getUser();
         model.addAttribute("fans",fans);
         model.addAttribute("user",user);
         model.addAttribute("newMessage", messageDao.countMessageByToId(user.getId()));
