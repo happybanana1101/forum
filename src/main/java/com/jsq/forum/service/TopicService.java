@@ -75,6 +75,7 @@ public class TopicService {
         }else {
             topic = topicCacheDao.getTopic(Long.valueOf(id));
         }
+        jedis.close();
         return topic;
     }
 }

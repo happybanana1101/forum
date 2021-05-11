@@ -14,6 +14,7 @@ public class PointsDao {
     public void addUser(String username){
         Jedis jedis = jedisUtil.getJedis();
         jedis.zadd("points",0,username);
+        jedis.close();
     }
     public void changePoint(String username,String option,Boolean useful){
         Jedis jedis = jedisUtil.getJedis();
@@ -28,14 +29,19 @@ public class PointsDao {
                                 else jedis.zadd("points",score-2,username);
                                 break;
         }
+        jedis.close();
     }
     public Double getPoint(String username){
         Jedis jedis = jedisUtil.getJedis();
-        return jedis.zscore("points",username);
+        Double points = jedis.zscore("points",username);
+        jedis.close();
+        return points;
     }
 
     public Set<String> getPointSet(){
         Jedis jedis = jedisUtil.getJedis();
-        return jedis.zrevrange("points",0,9);
+        Set<String> set = jedis.zrevrange("points",0,9);
+        jedis.close();
+        return set;
     }
 }

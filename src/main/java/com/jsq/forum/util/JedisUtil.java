@@ -13,8 +13,8 @@ public class JedisUtil {
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
         jedisPoolConfig.setMaxTotal(30);
         jedisPoolConfig.setMaxIdle(10);
-        //jedisPool = new JedisPool(jedisPoolConfig,"121.5.114.106",6379,3000,"jiang123");
-        jedisPool = new JedisPool(jedisPoolConfig,"127.0.0.1",6379,3000,"jiang123");
+        jedisPool = new JedisPool(jedisPoolConfig,"121.5.114.106",6379,3000,"jiang123");
+        //jedisPool = new JedisPool(jedisPoolConfig,"127.0.0.1",6379,3000,"jiang123");
     }
 
 }

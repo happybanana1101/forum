@@ -18,9 +18,9 @@ public class TopicCacheDao {
     public void addTopic(Topic topic){
         Jedis jedis = jedisUtil.getJedis();
         HashMap<String, String> map = new HashMap<>();
-        map.put("category",topic.getCategory());
-        map.put("code",topic.getCode());
-        map.put("content",topic.getContent());
+        if (null != topic.getCategory()) map.put("category",topic.getCategory());
+        if (null != topic.getCode()) map.put("code",topic.getCode());
+        if (null != topic.getContent()) map.put("content",topic.getContent());
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String format = simpleDateFormat.format(topic.getCreatedDate());
@@ -28,9 +28,10 @@ public class TopicCacheDao {
         }catch (Exception e){
             e.printStackTrace();
         }
-        map.put("title",topic.getTitle());
-        map.put("id_user", String.valueOf(topic.getIdUser()));
+        if (null != topic.getTitle()) map.put("title",topic.getTitle());
+        if (null != topic.getIdUser()) map.put("id_user", String.valueOf(topic.getIdUser()));
         jedis.hmset(String.valueOf(topic.getId()),map);
+        jedis.close();
     }
 
     public Topic getTopic(long id)  {
@@ -49,6 +50,7 @@ public class TopicCacheDao {
         }
         topic.setTitle(jedis.hget(_id,"title"));
         topic.setContent(jedis.hget(_id,"content"));
+        jedis.close();
         return topic;
     }
 }

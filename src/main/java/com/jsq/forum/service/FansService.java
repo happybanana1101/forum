@@ -30,6 +30,7 @@ public class FansService {
             fans.setUsername(userDao.getUsernameById(Integer.valueOf(s)));
             allfans.add(fans);
         }
+        jedis.close();
         return allfans;
     }
 }
