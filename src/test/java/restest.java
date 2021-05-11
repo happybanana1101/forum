@@ -37,18 +37,7 @@ public class restest {
     @Test
     public void t(){
         Jedis jedis = jedisUtil.getJedis();
-        Integer integer = Integer.valueOf("123");
-        System.out.println(integer);
-        Topic topic = topicDao.findTopicById((long)110);
-        try {
-            System.out.println(topic.getCreatedDate().toString());
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String date  = simpleDateFormat.format(topic.getCreatedDate());
-            System.out.println(date);
-            topic.setCreatedDate(simpleDateFormat.parse(jedis.hget("110","created_date")));
-            System.out.println(topic.getCreatedDate());
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        jedis.sadd("fans-"+String.valueOf(30),String.valueOf(31));
+        jedis.sadd("follow-"+String.valueOf(31),String.valueOf(30));
     }
 }
